@@ -14,10 +14,20 @@ then you should be off to the races
 ```
 rsafe setup
 rsafe login
-rsafe set my.first.key
-rsafe set my.first.anotherkey
-rsafe list my.first
-rsafe get my.first.key
+```
+then set some data using `rsafe set`  
+use dot notation to add data to subkeys, eg.
+```
+rsafe set heroku.mywebsite.username
+rsafe set heroku.mywebsite.password
+```
+check the keys you have set using `rsafe list`  
+```
+rsafe list heroku
+```
+then get your data by specifying the key  
+```
+rsafe get heroku.mywebsite.password
 ```
 etc  
 have fun
