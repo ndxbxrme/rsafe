@@ -55,7 +55,7 @@ else if(argv._.indexOf('login') === 0) {
     });
   }
   else {
-    console.log(chalk.red.bold('no settings file, run rsafe setup to get going'));
+    console.log(chalk.red.bold('no settings file, run ') + chalk.green.bold('rsafe setup') + chalk.red.bold(' to get going'));
   }
 }
 else if(argv._.indexOf('logout') === 0) {
@@ -75,14 +75,14 @@ else if(argv._.indexOf('set') === 0) {
         if(key) {
           getValue(argv._[2], function(value) {
             function callPlugin(count) {
-              getPlugin(user.plugins[count].type)
+              getPlugin(user.plugins[count]._type)
               .set(key, value, user.plugins[count], user.password)
               .then(function(data) {
                 if(data) {
                   data.__userHash = userHash;
                   data.__plugins = user.plugins;
                   user.plugins.forEach(function(plugin){
-                    getPlugin(plugin.type)
+                    getPlugin(plugin._type)
                     .syncData(data, plugin, user.password);
                   });
                 }
@@ -118,12 +118,12 @@ else if(argv._.indexOf('remove') === 0) {
     if(user) {
       getKey(argv._[1], function(key) {
         function callPlugin(count) {
-          getPlugin(user.plugins[count].type)
+          getPlugin(user.plugins[count]._type)
           .remove(key, user.plugins[count], user.password)
           .then(function(data) {
             if(data) {
               user.plugins.forEach(function(plugin){
-                getPlugin(plugin.type)
+                getPlugin(plugin._type)
                 .syncData(data, plugin, user.password);
               });
             }
@@ -154,13 +154,13 @@ else if(argv._.indexOf('get') === 0) {
       getKey(argv._[1], function(key) {
         function callPlugin(count) {
           var defer = q.defer();
-          getPlugin(user.plugins[count].type)
+          getPlugin(user.plugins[count]._type)
           .get(key, user.plugins[count], user.password)
           .then(function(value){
             if(value) {
               defer.resolve(value);
             }
-            if(count++<user.plugins.length) {
+            else if(count++<user.plugins.length) {
               defer.resolve(callPlugin(count));
             }
             else {
@@ -195,13 +195,13 @@ else if(argv._.indexOf('list') === 0) {
       getKey(argv._[1], function(key) {
         function callPlugin(count) {
           var defer = q.defer();
-          getPlugin(user.plugins[count].type)
+          getPlugin(user.plugins[count]._type)
           .list(key, user.plugins[count], user.password)
           .then(function(list){
             if(list) {
               defer.resolve(list);
             }
-            if(count++<user.plugins.length) {
+            else if(count++<user.plugins.length) {
               defer.resolve(callPlugin(count));
             }
             else {
@@ -259,7 +259,7 @@ else if(argv._.indexOf('password') === 0) {
       ], function(answers){
         function callPlugin(count) {
           var settings = loadSettings();
-          getPlugin(user.plugins[count].type)
+          getPlugin(user.plugins[count]._type)
           .getData(user.plugins[count], answers.oldPassword)
           .then(function(data){
             if(data) {
@@ -267,7 +267,7 @@ else if(argv._.indexOf('password') === 0) {
               var newPlugins = [];
               user.plugins.forEach(function(plugin){
                 for(var key in plugin) {
-                  if(key==='type') {
+                  if(key.indexOf('_')===0) {
                     continue;
                   }
                   try {
@@ -284,7 +284,7 @@ else if(argv._.indexOf('password') === 0) {
               data.__userHash = userHash;
               data.__plugins = user.newPlugins;
               settings[userHash].plugins.forEach(function(plugin){
-                getPlugin(plugin.type)
+                getPlugin(plugin._type)
                 .syncData(data, plugin, answers.newPassword);
               });
             } else {
@@ -467,7 +467,7 @@ function getLoggedInUser(done) {
     }
   }
   else {
-    console.log(chalk.red.bold('no settings file, run rsafe setup to get going'));
+    console.log(chalk.red.bold('no settings file, run ') + chalk.green.bold('rsafe setup') + chalk.red.bold(' to get going'));
   }
 }
 
@@ -544,14 +544,14 @@ function addPlugin(user, userHash) {
   var settings = loadSettings();
   var pluginChoices = [];
   plugins.forEach(function(plugin){
-    pluginChoices.push({name:plugin.name,checked:(plugin.name==='local')});
+    pluginChoices.push({name:plugin.name,checked:(plugin.name==='local'&&!user.loginToken)});
   });
 
   inquirer.prompt([
     {
       type:'checkbox',
       name:'plugins',
-      message:'choose plugins',
+      message:'choose storage plugins' + (user.loginToken?' to add':''),
       choices:pluginChoices
     }
   ], function(answers){
@@ -561,13 +561,11 @@ function addPlugin(user, userHash) {
     answers.plugins.forEach(function(pluginChoice){
       plugins.forEach(function(plugin){
         if( plugin.name === pluginChoice ) {
-          plugin.setPassword(user.password);
-          plugin.setUserHash(userHash);
           pluginsToCall.push(plugin.inquire);
         }
       });
     });
-    var result = pluginsToCall.reduce(q.when, q(userPlugins)).then(function(){
+    var result = pluginsToCall.reduce(q.when, q({userPlugins:userPlugins,userHash:userHash,password:user.password})).then(function(){
       settings[userHash] = {
         loginCheck:generateLoginCheck(user.password),
         plugins:userPlugins
