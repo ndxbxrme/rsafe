@@ -9,7 +9,7 @@ var inquirer = require('inquirer'),
 var password = '';
 var userHash = '';
 
-function getFile(url, done) {
+function getData(url, done) {
   url = crypto.Rabbit.decrypt(url, password).toString(crypto.enc.Utf8);
   if(fs.existsSync(url)) {
     var file = fs.readFileSync(url);
@@ -25,7 +25,7 @@ function getFile(url, done) {
   }
 }
 
-function saveFile(url, data) {
+function saveData(url, data) {
   url = crypto.Rabbit.decrypt(url, password).toString(crypto.enc.Utf8);
   fs.writeFileSync(url, crypto.Rabbit.encrypt(JSON.stringify(data), password).toString());
 }
@@ -42,8 +42,8 @@ module.exports = {
       }
       ], function(answers){
         var url = crypto.Rabbit.encrypt(answers.url || __dirname + '/safe' + userHash + '.json', password).toString();
-        getFile(url, function(data){
-          saveFile(url, data);
+        getData(url, function(data){
+          saveData(url, data);
           userPlugins.unshift({ //only local should unshift(), other plugins should push()
             type: 'local',
             url: url
@@ -56,7 +56,7 @@ module.exports = {
   remove: function(key, settings, _password) {
     var defer = q.defer();
     password = _password;
-    getFile(settings.url, function(data){
+    getData(settings.url, function(data){
       inquirer.prompt([
         {
           type: 'text',
@@ -66,7 +66,7 @@ module.exports = {
       ], function(answers){
         if(answers.confirm==='delete') {
           data = common.remove(key, data);
-          saveFile(settings.url, data);
+          saveData(settings.url, data);
           defer.resolve(data);
         }
         else {
@@ -79,9 +79,9 @@ module.exports = {
   set: function(key, value, settings, _password) {
     var defer = q.defer();
     password = _password;
-    getFile(settings.url, function(data){
+    getData(settings.url, function(data){
       data = common.set(key, value, data);
-      //saveFile(settings.url, data);
+      //saveData(settings.url, data);
       defer.resolve(data);
     });
     return defer.promise;
@@ -89,7 +89,7 @@ module.exports = {
   get: function(key, settings, _password) {
     var defer = q.defer();
     password = _password;
-    getFile(settings.url, function(data){
+    getData(settings.url, function(data){
       common.get(key, data, defer);
     });
     return defer.promise;
@@ -97,19 +97,19 @@ module.exports = {
   list: function(key, settings, _password) {
     var defer = q.defer();
     password = _password;
-    getFile(settings.url, function(data){
+    getData(settings.url, function(data){
       common.list(key, data, defer);
     });
     return defer.promise;
   },
   syncData: function(data, settings, _password) {
     password = _password;
-    saveFile(settings.url, data);
+    saveData(settings.url, data);
   },
   getData: function(settings, _password) {
     var defer = q.defer();
     password = _password;
-    getFile(settings.url, function(data){
+    getData(settings.url, function(data){
       if(data) {
         defer.resolve(data);
       }
