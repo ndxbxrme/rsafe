@@ -15,7 +15,7 @@ then you should be off to the races
 rsafe setup
 rsafe login
 ```
-then set some data using `rsafe set`  
+set some data using `rsafe set`  
 use dot notation to add data to subkeys, eg.
 ```
 rsafe set heroku.mywebsite.username
@@ -25,7 +25,7 @@ check the keys you have set using `rsafe list`
 ```
 rsafe list heroku
 ```
-then get your data by specifying the key  
+get your data by specifying the key  
 ```
 rsafe get heroku.mywebsite.password
 ```
