@@ -267,6 +267,9 @@ else if(argv._.indexOf('password') === 0) {
               var newPlugins = [];
               user.plugins.forEach(function(plugin){
                 for(var key in plugin) {
+                  if(key==='type') {
+                    continue;
+                  }
                   try {
                     var decProp = crypto.Rabbit.decrypt(plugin[key],answers.oldPassword).toString(crypto.enc.Utf8);
                     plugin[key] = crypto.Rabbit.encrypt(decProp,answers.newPassword).toString();
