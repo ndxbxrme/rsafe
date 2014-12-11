@@ -39,11 +39,18 @@ module.exports = {
         type: 'text',
         name: 'url',
         message: 'storage location (leave blank for default)'
+      },
+      {
+        type: 'text',
+        name: 'name',
+        message: 'give this safe a name'
       }
       ], function(answers){
         var url = crypto.Rabbit.encrypt(answers.url || __dirname + '/safe' + bundle.userHash + '.json', bundle.password).toString();
+        var name = crypto.Rabbit.encrypt(answers.url || 'local', bundle.password).toString();
         var settings = {
           _type: 'local',
+          name: name,
           url: url
         };
         getData(settings, bundle.password, function(data){

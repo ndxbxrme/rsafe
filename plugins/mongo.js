@@ -81,13 +81,20 @@ module.exports = {
         type: 'text',
         name: 'password',
         message: 'password'
+      },
+      {
+        type: 'text',
+        name: 'name',
+        message: 'give this safe a name'
       }
       ], function(answers){
         var url = crypto.Rabbit.encrypt(answers.url || 'mongodb://localhost:27017/rsafe', bundle.password).toString();
+        var name = crypto.Rabbit.encrypt(answers.name || 'mongo', bundle.password).toString();
         var mongoUsername = crypto.Rabbit.encrypt(answers.username.toString(), bundle.password).toString();
         var mongoPassword = crypto.Rabbit.encrypt(answers.password.toString(), bundle.password).toString();
         var settings = {
           _type: 'mongodb',
+          name: name,
           url: url,
           _hash: bundle.userHash,
           username: mongoUsername,
