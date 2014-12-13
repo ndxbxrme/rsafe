@@ -379,9 +379,9 @@ function generateLoginCheck(password) {
 }
 function generateS() {
   var s = util.inspect(process.versions).length;
-  var s1 = process.memoryUsage().heapTotal;
+  var s1 = 3333;//process.memoryUsage().heapTotal;
   var s2 = util.inspect(module.children).toString().length;
-  var s3 = parseInt((Math.floor(Date.now()/1000) - process.hrtime()[0]).toString().replace(/[0-9]{1}$/,''));
+  var s3 = 4444;//parseInt((Math.floor(Date.now()/1000) - process.hrtime()[0]).toString().replace(/[0-9]{1}$/,''));
   return ((s|s3)+s+s3).toString()+s+s3;
 }
 function generateKey(s,d) {
