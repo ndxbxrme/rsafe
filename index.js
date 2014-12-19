@@ -405,6 +405,7 @@ else if(argv._.indexOf('help') === 0 || argv._.length === 0) {
   console.log(chalk.green.bold('get') + ' - get data');
   console.log(chalk.green.bold('list') + ' - list keys');
   console.log(chalk.green.bold('remove') + ' - delete key and data');
+  console.log(chalk.green.bold('rename') + ' - rename a key');
   console.log(chalk.green.bold('add plugin') + ' - add a storage plugin');
   console.log(chalk.green.bold('username') + ' - change your local username');
   console.log(chalk.green.bold('password') + ' - change your password');
