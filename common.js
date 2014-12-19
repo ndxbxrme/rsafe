@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('lodash');
+
 module.exports = {
   list: function(key, data, defer) {
     if(data) {
@@ -68,6 +70,25 @@ module.exports = {
     object._value = value;
     return data;
   },
+  setObject: function(key, value, data) {
+    if(!data) {
+      data = {};
+    }
+    var keybits = key.split('.');
+    var object = data;
+    for(var f=0; f<keybits.length; f++) {
+      var enckey = keybits[f];
+      if(object[enckey]) {
+
+      }
+      else {
+        object[enckey] = {};
+      }
+      object = object[enckey];
+    }
+    _.merge(object,value);
+    return data;
+  },
   get: function(key, data, defer) {
     if(data) {
       var keybits = key.split('.');
@@ -82,6 +103,26 @@ module.exports = {
         }
       }
       defer.resolve(object._value);
+    }
+    else {
+      defer.reject(null);
+    }
+    return defer.promise;
+  },
+  getObject: function(key, data, defer) {
+    if(data) {
+      var keybits = key.split('.');
+      var object = data;
+      for(var f=0; f<keybits.length; f++) {
+        var enckey = /*crypto.Rabbit.encrypt(*/keybits[f]/*, password).toString()*/;
+        if(object[enckey]) {
+          object = object[enckey];
+        }
+        else {
+          defer.reject(null);
+        }
+      }
+      defer.resolve(object);
     }
     else {
       defer.reject(null);

@@ -29,6 +29,7 @@
     "crypto-js": "^3.1.2-5",
     "glob": "^4.2.1",
     "inquirer": "^0.8.0",
+    "lodash": "^2.4.1",
     "minimist": "^1.1.0",
     "mongoose": "^3.8.20",
     "path": "^0.4.9",

@@ -9,7 +9,8 @@ var cp = require('safe-copy-paste').silent(),
     fs = require('fs'),
     crypto = require('crypto-js'),
     q = require('q'),
-    util = require('util');
+    util = require('util'),
+    _ = require('lodash');
 
 var tokenInterval = 10 * 60 * 1000;
 var loginInterval = 2 * 60 * 60 * 1000;
@@ -112,13 +113,12 @@ else if(argv._.indexOf('set') === 0) {
   });
 }
 else if(argv._.indexOf('remove') === 0) {
-  console.log('removing');
   getLoggedInUser(function(user){
     if(user) {
       getKey(argv._[1], function(key) {
         function callPlugin(count) {
           getPlugin(user.plugins[count]._type)
-          .remove(key, user.plugins[count], user.password)
+          .remove(key, user.plugins[count], user.password, 'delete')
           .then(function(data) {
             if(data) {
               user.plugins.forEach(function(plugin){
@@ -188,6 +188,64 @@ else if(argv._.indexOf('get') === 0) {
     }
   });
 }
+else if(argv._.indexOf('rename') === 0) {
+  getLoggedInUser(function(user, userHash){
+    if(user) {
+      getKey(argv._[1], function(key) {
+        getNewKey(argv._[2], function(newKey){
+          function callPlugin(count) {
+            var defer = q.defer();
+            var rplugin = getPlugin(user.plugins[count]._type);
+            rplugin.getObject(key, user.plugins[count], user.password)
+            .then(function(value){
+              if(value) {
+                rplugin.remove(key, user.plugins[count], user.password, 'rename')
+                .then(function(){
+                  rplugin.setObject(newKey, value, user.plugins[count], user.password)
+                  .then(function(data) {
+                    if(data) {
+                      data.__userHash = userHash;
+                      data.__plugins = user.plugins;
+                      user.plugins.forEach(function(plugin){
+                        getPlugin(plugin._type)
+                        .syncData(data, plugin, user.password);
+                      });
+                    }
+                    process.nextTick(function(){
+                      defer.resolve();
+                    })
+                  });
+                });
+              }
+              else if(count++<user.plugins.length) {
+                defer.resolve(callPlugin(count));
+              }
+              else {
+                defer.reject(null);
+              }
+            });
+            return defer.promise;
+          }
+          if(key) {
+            //loop through plugins and get the first good value
+            callPlugin(0).then(function(){
+              console.log(chalk.white.bold('key successfully renamed'));
+            }, function(err) {
+              console.log(chalk.red.bold('could not find key'));
+            });
+          }
+          else {
+            //no key
+          }
+        });
+      });
+    }
+    else {
+      //no user
+      console.log(chalk.blue.bold('please login'));
+    }
+  });
+}
 else if(argv._.indexOf('list') === 0) {
   getLoggedInUser(function(user){
     if(user) {
@@ -211,7 +269,7 @@ else if(argv._.indexOf('list') === 0) {
         }
         //if(key) {
           callPlugin(0).then(function(list){
-            console.dir(list);
+            console.dir(_.sortBy(list));
           });
         //}
         //else {
@@ -488,6 +546,23 @@ function getKey(key, done) {
     done(key);
   }
 }
+
+function getNewKey(key, done) {
+  if(!key) {
+    inquirer.prompt([
+      {
+        type:'text',
+        name:'key',
+        message:'new key'
+      }
+      ], function(answers){
+        done(answers.key);
+      });
+    }
+    else {
+      done(key);
+    }
+  }
 
 function getValue(value, done) {
   if(!value) {

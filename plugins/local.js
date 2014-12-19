@@ -61,17 +61,17 @@ module.exports = {
     });
     return defer.promise;
   },
-  remove: function(key, settings, password) {
+  remove: function(key, settings, password, confirm) {
     var defer = q.defer();
     getData(settings, password, function(data){
       inquirer.prompt([
         {
           type: 'text',
           name: 'confirm',
-          message: 'type delete to continue'
+          message: 'type ' + confirm + ' to continue'
         }
       ], function(answers){
-        if(answers.confirm==='delete') {
+        if(answers.confirm===confirm) {
           data = common.remove(key, data);
           saveData(settings, password, data);
           defer.resolve(data);
@@ -87,7 +87,14 @@ module.exports = {
     var defer = q.defer();
     getData(settings, password, function(data){
       data = common.set(key, value, data);
-      //saveData(settings, password, data);
+      defer.resolve(data);
+    });
+    return defer.promise;
+  },
+  setObject: function(key, value, settings, password) {
+    var defer = q.defer();
+    getData(settings, password, function(data){
+      data = common.setObject(key, value, data);
       defer.resolve(data);
     });
     return defer.promise;
@@ -96,6 +103,13 @@ module.exports = {
     var defer = q.defer();
     getData(settings, password, function(data){
       common.get(key, data, defer);
+    });
+    return defer.promise;
+  },
+  getObject: function(key, settings, password) {
+    var defer = q.defer();
+    getData(settings, password, function(data){
+      common.getObject(key, data, defer);
     });
     return defer.promise;
   },
