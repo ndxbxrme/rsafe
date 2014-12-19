@@ -26,13 +26,13 @@
   "homepage": "https://github.com/ndxbxrme/rsafe",
   "dependencies": {
     "chalk": "^0.5.1",
-    "copy-paste": "^1.0.1",
     "crypto-js": "^3.1.2-5",
     "glob": "^4.2.1",
     "inquirer": "^0.8.0",
     "minimist": "^1.1.0",
     "mongoose": "^3.8.20",
     "path": "^0.4.9",
-    "q": "^1.1.2"
+    "q": "^1.1.2",
+    "safe-copy-paste": "^0.4.0"
   }
 }
