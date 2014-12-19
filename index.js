@@ -1,6 +1,6 @@
 //'use strict';
 
-var cp = require('safe-copy-paste'),
+var cp = require('safe-copy-paste').silent(),
     argv = require('minimist')(process.argv.slice(2)),
     inquirer = require('inquirer'),
     chalk = require('chalk'),
