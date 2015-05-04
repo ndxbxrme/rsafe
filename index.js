@@ -16,6 +16,10 @@ var cp = require('safe-copy-paste').silent(),
 var tokenInterval = 10 * 60 * 1000;
 var loginInterval = 2 * 60 * 60 * 1000;
 
+var appDataDir = (process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + 'Library/Preference' : '/var/local')) + '/rsafe';
+if (!fs.existsSync(appDataDir)){
+  fs.mkdirSync(appDataDir);
+}
 var plugins = [];
 var pluginfiles = glob.sync(path.normalize(__dirname) + '/plugins/*.js');
 pluginfiles.forEach(function(plugin){
@@ -26,7 +30,7 @@ if(argv._.indexOf('setup') === 0 || argv.setup) {
   setup();
 }
 else if(argv._.indexOf('login') === 0) {
-  if(fs.existsSync(__dirname + '/settings.json')) {
+  if(fs.existsSync(appDataDir + '/settings.json')) {
     var settings = loadSettings();
     getUserName(argv._[1], function(username) {
       var userHash = crypto.MD5(username.toString()).toString();
@@ -415,14 +419,14 @@ else if(argv._.indexOf('help') === 0 || argv._.length === 0) {
 
 function loadSettings() {
   var settings = {};
-  if(fs.existsSync(__dirname + '/settings.json')) {
-    settings = JSON.parse(fs.readFileSync(__dirname + '/settings.json'));
+  if(fs.existsSync(appDataDir + '/settings.json')) {
+    settings = JSON.parse(fs.readFileSync(appDataDir + '/settings.json'));
   }
   return settings;
 }
 
 function saveSettings(settings) {
-  fs.writeFileSync(__dirname + '/settings.json', JSON.stringify(settings));
+  fs.writeFileSync(appDataDir + '/settings.json', JSON.stringify(settings));
 }
 function getPlugin(name) {
   for(var f=0; f<plugins.length; f++) {
@@ -487,7 +491,7 @@ function checkPassword(loggedInUser, loginCheck, userHash, done) {
   }
 }
 function getLoggedInUser(done) {
-  if(fs.existsSync(__dirname + '/settings.json')) {
+  if(fs.existsSync(appDataDir + '/settings.json')) {
     var settings = loadSettings();
     var loggedInUser;
     for(var key in settings) {

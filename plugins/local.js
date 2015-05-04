@@ -7,6 +7,7 @@ var inquirer = require('inquirer'),
     common = require('../common'),
     chalk = require('chalk');
 
+var appDataDir = (process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + 'Library/Preference' : '/var/local')) + '/rsafe';
 
 function getData(settings, password, done) {
   var url = crypto.Rabbit.decrypt(settings.url, password).toString(crypto.enc.Utf8);
@@ -38,7 +39,7 @@ module.exports = {
       {
         type: 'text',
         name: 'url',
-        message: 'storage location (leave blank for default)'
+        message: 'storage location (' + appDataDir + ')'
       },
       {
         type: 'text',
@@ -46,7 +47,7 @@ module.exports = {
         message: 'give this safe a name'
       }
       ], function(answers){
-        var url = crypto.Rabbit.encrypt(answers.url || __dirname + '/safe' + bundle.userHash + '.json', bundle.password).toString();
+        var url = crypto.Rabbit.encrypt(answers.url || appDataDir + '/safe' + bundle.userHash + '.json', bundle.password).toString();
         var name = crypto.Rabbit.encrypt(answers.url || 'local', bundle.password).toString();
         var settings = {
           _type: 'local',
