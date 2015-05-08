@@ -3,7 +3,7 @@
 
 var argv = require('minimist')(process.argv.slice(2)),
     chalk = require('chalk'),
-    rsafe = require('./rsafe'),
+    rsafe = require('./rsafe.service'),
     readline = require('readline');
 
 if(argv._.indexOf('setup') === 0 || argv.setup) {
@@ -76,7 +76,7 @@ else if(argv._.length === 0) {
   });
   var prompt = function() {
     rl.question('> ', function(answer) {
-      if(['quit', 'exit'].indexOf(answer)!==-1) {
+      if(['quit', 'exit', 'q', 'x'].indexOf(answer)!==-1) {
         rl.close(); 
       }
       else {
