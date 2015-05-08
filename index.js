@@ -48,7 +48,9 @@ else if(argv._.indexOf('help') === 0) {
 else if(argv._.length === 0) {
   //interactive mode
   var methods = 'get set list remove rename login logout setup add username password help'.split(' ');
-  console.log(chalk.yellow.bold('interactive mode - type ') + chalk.green.bold('exit') + chalk.yellow.bold(' or ') + chalk.green.bold('quit') + chalk.yellow.bold(' to exit'));
+  console.log(chalk.yellow.bold('interactive mode - type ') + chalk.green.bold('help') + chalk.yellow.bold(' for a list of commands, ') + chalk.green.bold('exit') + chalk.yellow.bold(' or ') + chalk.green.bold('quit') + chalk.yellow.bold(' to exit'));
+  console.log(chalk.yellow.bold('Use tab for autocomplete'));
+  console.log('');
   var completer = function(line, callback) {
     var hits = methods.filter(function(c) { return c.indexOf(line) === 0;});
     var foundMethod;

@@ -667,6 +667,7 @@ module.exports = {
     console.log(chalk.green.bold('username') + ' - change your local username');
     console.log(chalk.green.bold('password') + ' - change your password');
     console.log(chalk.green.bold('help') + ' - this list of commands');
+    console.log('');
     if(done) { done(null, null); }
   },
 };
