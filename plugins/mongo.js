@@ -78,7 +78,7 @@ module.exports = {
         message: 'username'
       },
       {
-        type: 'text',
+        type: 'password',
         name: 'password',
         message: 'password'
       },

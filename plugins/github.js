@@ -70,7 +70,7 @@ module.exports = {
         message: 'Github username'
       },
       {
-        type: 'text',
+        type: 'password',
         name: 'password',
         message: 'Github password'
       }
