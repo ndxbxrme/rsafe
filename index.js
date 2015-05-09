@@ -7,7 +7,7 @@ var argv = require('minimist')(process.argv.slice(2)),
     readline = require('readline');
 
 if(argv._.indexOf('setup') === 0 || argv.setup) {
-  setup();
+  rsafe.setup(argv);
 }
 else if(argv._.indexOf('login') === 0) {
   rsafe.login(argv);
