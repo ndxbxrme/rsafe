@@ -209,21 +209,6 @@ function getUserName(username, done) {
   }
 }
 
-function setup() {
-
-  inquirer.prompt([
-    {
-      type:'text',
-      name:'username',
-      message:'username'
-    },
-    {
-      type:'password',
-      name:'password',
-      message:'password'
-    }
-  ], addPlugin);
-}
 
 function addPlugin(user, userHash) {
   var settings = loadSettings();
@@ -262,6 +247,20 @@ function addPlugin(user, userHash) {
 
 
 module.exports = {
+  setup: function(argv, done) {
+    inquirer.prompt([
+      {
+        type:'text',
+        name:'username',
+        message:'username'
+      },
+      {
+        type:'password',
+        name:'password',
+        message:'password'
+      }
+    ], addPlugin);
+  },
   login: function(argv, done) {
     if(fs.existsSync(appDataDir + '/settings.json')) {
       var settings = loadSettings();
