@@ -1,6 +1,6 @@
 {
   "name": "rsafe",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "a place to keep your passwords",
   "main": "build/index.js",
   "bin": {
