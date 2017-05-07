@@ -47,7 +47,6 @@ module.exports = (grunt) ->
     'coffeelint'
   ]
   grunt.registerTask 'default', [
-    'coffeelint'
     'coffee'
     'file_append'
     'watch'

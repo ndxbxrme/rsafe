@@ -19,7 +19,7 @@
 
   _ = require('lodash');
 
-  cp = require('safe-copy-paste').silent();
+  cp = require('copy-paste');
 
   tokenInterval = 10 * 60 * 1000;
 

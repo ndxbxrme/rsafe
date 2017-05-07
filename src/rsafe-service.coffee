@@ -7,7 +7,7 @@ chalk = require('chalk')
 q = require('q')
 util = require('util')
 _ = require('lodash')
-cp = require('safe-copy-paste').silent()
+cp = require('copy-paste')
 tokenInterval = 10 * 60 * 1000
 loginInterval = 2 * 60 * 60 * 1000
 appDataDir = (process.env.APPDATA or (if process.platform == 'darwin' then process.env.HOME + 'Library/Preference' else '/var/local')) + '/rsafe'
@@ -30,7 +30,6 @@ getPlugin = (name) ->
     f++
   return
 
-#getLoggedInUser();
 
 generateLoginCheck = (password) ->
   crypto.Rabbit.encrypt('rain' + Math.floor(Math.random() * 65535) + 'storm', password).toString()
