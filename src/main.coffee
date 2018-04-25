@@ -1,10 +1,9 @@
 'use strict'
 
 electron = require 'electron'
-{app, BrowserWindow, globalShortcut, Tray, Menu, ipcMain, Notification} = electron
+{app, BrowserWindow, globalShortcut, Tray, Menu, ipcMain, Notification, clipboard} = electron
 {autoUpdater} = require 'electron-updater'
 fs = require 'fs'
-cp = require 'copy-paste'
 url = require 'url'
 path = require 'path'
 robot = require 'robotjs'
@@ -282,7 +281,7 @@ keyDown = (event) ->
             dataUpdated = true
             data = data or {}
             if captured is 'clip'
-              captured = cp.paste()
+              captured = clipboard.readText()
             dotty.put data, "#{currentKey}._value", captured
             saveData (err) ->
               if not err
@@ -306,7 +305,7 @@ keyDown = (event) ->
             while i++ < captured.length + 3 + (if copy then 5 else 0)
               robot.keyTap 'backspace'
             if copy
-              cp.copy val
+              clipboard.writeText val
             else
               robot.typeString val
         captured = ''
