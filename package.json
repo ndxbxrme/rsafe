@@ -1,6 +1,6 @@
 {
   "name": "rsafe",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "ndx-framework web app",
   "main": "app/main.js",
   "scripts": {
@@ -9,8 +9,8 @@
     "dev": "grunt build && npm start"
   },
   "build": {
-    "appId": "com.ndxbxrme.rsafeelectron",
-    "productName": "rsafeelectron"
+    "appId": "com.ndxbxrme.rsafe",
+    "productName": "rsafe"
   },
   "iohook": {
     "targets": [
