@@ -1,0 +1,15 @@
+html
+  head
+    link(rel='stylesheet', href='../../app.css')
+  body
+    form(onsubmit='renderer.submit(event)')
+      p rSafe
+      input(type='text', name='key', placeholder='Key')
+      input(type='text', name='val', placeholder='Value')
+      .controls
+        input(type='submit', name='submit', value='Set')
+        input(type='button', name='cancel', onclick='renderer.cancel()', value='Cancel')
+    script(type='text/javascript').
+      var renderer = require('./setkey.js');
+      document.getElementsByName('key')[0].focus()
+    

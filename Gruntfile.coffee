@@ -1,53 +1,66 @@
-'use strict'
-
 module.exports = (grunt) ->
   require('load-grunt-tasks') grunt
   grunt.initConfig
+    express:
+      web:
+        options:
+          script: 'app/test.js'
     watch:
       coffee:
-        files: ['src/**/*.coffee', 'test/**/*.coffee', 'Gruntfile.coffee']
-        tasks: ['coffeelint', 'coffee', 'file_append']
+        files: ['src/**/*.coffee']
+        tasks: ['build']
     coffee:
       options:
-        sourceMap: false
-        sourceRoot: ''
-      server:
+        sourceMap: true
+      default:
         files: [{
           expand: true
-          cwd: 'src/'
+          cwd: 'src'
           src: ['**/*.coffee']
-          dest: 'build'
+          dest: 'app'
           ext: '.js'
-        }, {
+        }]
+    pug:
+      options:
+        pretty: true
+      default:
+        files: [
           expand: true
-          cwd: 'test/'
-          src: ['**/*test.coffee']
-          dest: 'test'
-          ext: '.js'
-        }]
-    coffeelint:
-      all:
+          cwd: 'src'
+          src: ['**/*.pug']
+          dest: 'app'
+          ext: '.html'
+        ]
+    stylus:
+      default:
         files:
+          "app/app.css": "src\/**\/*.styl"
+    copy:
+      build:
+        files: [
+          expand: true
+          cwd: 'files'
+          dest: 'app'
           src: [
-            'src/**/*.coffee'
-            'Gruntfile.coffee'
-            'test/**/*.coffee'
+            '**/*.*'
           ]
-        options:
-          'no_trailing_whitespace': level: 'ignore'
-          'max_line_length': level: 'ignore'
-    file_append:
-      default_options:
-        files: [{
-          prepend: '#!/usr/bin/env node\n//\'use strict\';\n'
-          input: 'build/index.js'
-          output: 'build/index.js'
-        }]
-  grunt.registerTask 'test', [
-    'coffeelint'
+        ]
+    clean:
+      build: 'app'
+    nodeunit:
+      tests: ['build/test/**/*.js']
+  grunt.registerTask 'build', [
+    'clean:build'
+    'copy:build'
+    'coffee'
+    'pug'
+    'stylus'
   ]
   grunt.registerTask 'default', [
-    'coffee'
-    'file_append'
+    'build'
     'watch'
+  ]
+  grunt.registerTask 'test', [
+    'build'
+    'nodeunit'
   ]

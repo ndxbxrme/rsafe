@@ -1,0 +1,12 @@
+html
+  head
+    link(rel='stylesheet', href='../../app.css')
+  body
+    form(onsubmit='renderer.submit(event)')
+      p rSafe
+      input(type='text', name='username', placeholder='User name')
+      input(type='password', name='password', placeholder='Password')
+      input(type='submit', name='submit', value='Log in')
+    script(type='text/javascript').
+      var renderer = require('./renderer.js');
+      document.getElementsByName('username')[0].focus()
