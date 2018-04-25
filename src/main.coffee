@@ -146,10 +146,6 @@ showGetKey = ->
 ready = ->
   tray = new Tray path.join __dirname, 'icon.png'
   contextMenu = Menu.buildFromTemplate [
-    label: 'Quit'
-    click: ->
-      app.quit()
-  ,
     id: 'login'
     label: 'Log in'
     click: logIn
@@ -168,6 +164,10 @@ ready = ->
     label: 'Get key'
     click: showGetKey
     hide: true
+  ,
+    label: 'Quit'
+    click: ->
+      app.quit()
   ]
   tray.setToolTip 'rSafe'
   tray.setContextMenu contextMenu
