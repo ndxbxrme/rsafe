@@ -142,7 +142,7 @@ showGetKey = ->
     slashes: true
   mainWindow.show()
 
-
+ 
 ready = ->
   tray = new Tray path.join __dirname, 'icon.png'
   contextMenu = Menu.buildFromTemplate [
