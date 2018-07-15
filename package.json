@@ -49,11 +49,14 @@
     "buffer-slice": "0.0.1",
     "dotty": "^0.1.0",
     "electron-updater": "^2.21.8",
+    "gists": "^1.0.1",
+    "glob": "^7.1.2",
     "iohook": "^0.1.15",
     "jpeg-js": "^0.3.4",
     "keycode": "^2.2.0",
     "pngjs": "^3.3.3",
     "request": "^2.85.0",
-    "robotjs": "^0.5.1"
+    "robotjs": "^0.5.1",
+    "yma": "0.0.13"
   }
 }

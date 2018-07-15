@@ -1,7 +1,7 @@
 form(submit='submit(event)')
   p rSafe
-  input(type='text', model='key', placeholder='Key')
-  input(type='text', model='val', placeholder='Value')
-  .controls
+  input(type='text', model='githubUser', placeholder='Github username')
+  input(type='text', model='githubKey', placeholder='Github key')
+  .controller
     input(type='submit', name='submit', value='Set')
     input(type='button', name='cancel', click='cancel()', value='Cancel')

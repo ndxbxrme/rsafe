@@ -1,12 +1,22 @@
 'use strict'
-
+yma = require 'yma'
 {ipcRenderer} = require 'electron'
 
-module.exports =
-  submit: (e) ->
-    e.preventDefault()
-    ipcRenderer.send 'setKey',
-      key: document.getElementsByName('key')[0].value
-      val: document.getElementsByName('val')[0].value
-  cancel: ->
-    ipcRenderer.send 'hideWindow'
+yma.route '/setkey', ->
+  templateUrl: 'app/routes/setkey/setkey.html'
+  controller: ->
+    @.submit = =>
+      console.log 'shout', @.key, @.val
+      ipcRenderer.send 'setKey',
+        key: @.key
+        val: @.val
+      ###
+      console.log 'submitting'
+      e.preventDefault()
+      ipcRenderer.send 'setKey',
+        key: @.key
+        val: @.val
+      ###
+    @.cancel = ->
+      ipcRenderer.send 'hideWindow'
+    null
