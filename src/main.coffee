@@ -299,7 +299,7 @@ ready = ->
     pathname: path.join __dirname, 'index.html'
     protocol: 'file:'
     slashes: true
-  mainWindow.openDevTools()
+  #mainWindow.openDevTools()
   mainWindow.on 'closed', ->
     mainWindow = null
   feedbackWindow = new BrowserWindow
