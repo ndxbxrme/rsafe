@@ -1,6 +1,6 @@
 {
   "name": "rsafe",
-  "version": "4.0.7",
+  "version": "4.0.8",
   "description": "ndx-framework web app",
   "main": "app/main.js",
   "scripts": {

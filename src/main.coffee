@@ -317,7 +317,7 @@ ready = ->
     pathname: path.join __dirname, 'feedback.html'
     protocol: 'file:'
     slashes: true
-  feedbackWindow.openDevTools()
+  #feedbackWindow.openDevTools()
   session = electron.session
   session.defaultSession.webRequest.onBeforeRequest ['*://*./*'], (details, cb) ->
     myurl = details.url.replace /^file:\/\/\/.:\//, ''
