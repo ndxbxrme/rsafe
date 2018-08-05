@@ -177,12 +177,16 @@ doSaveData = (plugin, dateVal, callback) ->
 getData = (callback) ->
   dateVal = 0
   updateList = {}
+  calledBack = false
   async.eachSeries Object.keys(plugins), (plugin, pluginCallback) ->
     doGetData plugin, (err, res) ->
       if not err
         if res.date > dateVal
           dateVal = res.date
           data = res.data
+          if not calledBack
+            calledBack = true
+            callback()
         updateList[plugin] = res.date
       pluginCallback()
   , ->
@@ -192,7 +196,8 @@ getData = (callback) ->
       else
         updateCallback()
     , ->
-      callback()
+      if not calledBack
+        callback()
 saveData = (callback) ->
   dateVal = new Date().valueOf()
   async.eachSeries Object.keys(plugins), (plugin, pluginCallback) ->
