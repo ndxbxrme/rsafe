@@ -354,3 +354,47 @@ d:\dev\github\rsafe\node_modules\segfault-handler\src\segfault-handler.cpp (116)
 00000000775CA023 (ntdll): (filename not available): DbgUiRemoteBreakin
 00000000773C59CD (kernel32): (filename not available): BaseThreadInitThunk
 000000007752383D (ntdll): (filename not available): RtlUserThreadStart
+PID 7988 received SIGSEGV for address: 0xfd1ea06d
+SymInit: Symbol-SearchPath: '.;D:\DEV\github\rsafe;C:\Users\lewis\AppData\Roaming\npm\node_modules\electron\dist;C:\Windows;C:\Windows\system32;SRV*C:\websymbols*http://msdl.microsoft.com/download/symbols;', symOptions: 530, UserName: 'lewis'
+OS-Version: 6.1.7601 (Service Pack 1) 0x300-0x1
+d:\dev\github\rsafe\node_modules\segfault-handler\src\stackwalker.cpp (941): StackWalker::ShowCallstack
+d:\dev\github\rsafe\node_modules\segfault-handler\src\segfault-handler.cpp (116): segfault_handler
+00000000775148F8 (ntdll): (filename not available): RtlValidateHeap
+0000000077510092 (ntdll): (filename not available): RtlInitializeResource
+0000000077513C1F (ntdll): (filename not available): RtlRaiseException
+000007FEFD1EA06D (KERNELBASE): (filename not available): RaiseException
+000007FEFF5C5193 (RPCRT4): (filename not available): RpcRaiseException
+000007FEFF64E7EA (RPCRT4): (filename not available): RpcCancelThread
+000007FEFF62A1F0 (RPCRT4): (filename not available): I_RpcBindingIsServerLocal
+000007FEFF68F9E1 (RPCRT4): (filename not available): RpcAsyncCompleteCall
+000007FEFF68A2FA (RPCRT4): (filename not available): RpcEpRegisterNoReplaceW
+000007FEFF68F95A (RPCRT4): (filename not available): RpcAsyncCompleteCall
+000007FEFF68F8B8 (RPCRT4): (filename not available): RpcAsyncCompleteCall
+000007FEFD00413A (WINSTA): (filename not available): WinStationFreeMemory
+000007FEFD0047F8 (WINSTA): (filename not available): WinStationRegisterConsoleNotificationEx
+000007FEFD0040DE (WINSTA): (filename not available): WinStationFreeMemory
+000007FEFF5C76DD (RPCRT4): (filename not available): NdrServerContextNewMarshall
+000007FEFF5C2006 (RPCRT4): (filename not available): UuidToStringW
+000007FEFF655B77 (RPCRT4): (filename not available): RpcSmDisableAllocate
+000007FEFF65F19D (RPCRT4): (filename not available): NdrConformantVaryingArrayUnmarshall
+000007FEFF65F9B0 (RPCRT4): (filename not available): NdrConformantVaryingArrayUnmarshall
+000007FEFF641933 (RPCRT4): (filename not available): MesIncrementalHandleReset
+000007FEFF67768C (RPCRT4): (filename not available): NdrEncapsulatedUnionUnmarshall
+000007FEFF66BA0B (RPCRT4): (filename not available): RpcAsyncCancelCall
+000007FEFD004B3D (WINSTA): (filename not available): WinStationRegisterConsoleNotificationEx
+000007FEFD0089D6 (WINSTA): (filename not available): WinStationUnRegisterConsoleNotification
+000007FEFD00892B (WINSTA): (filename not available): WinStationUnRegisterConsoleNotification
+000007FEFD0087B5 (WINSTA): (filename not available): WinStationUnRegisterConsoleNotification
+000007FEFC3A1E8C (WTSAPI32): (filename not available): WTSUnRegisterSessionNotification
+000000014190DED4 (electron): (filename not available): IsSandboxedProcess
+000000014190DB92 (electron): (filename not available): IsSandboxedProcess
+000000014190DDCA (electron): (filename not available): IsSandboxedProcess
+00000001401E2E22 (electron): (filename not available): (function-name not available)
+00000001401E2B01 (electron): (filename not available): (function-name not available)
+0000000141688392 (electron): (filename not available): IsSandboxedProcess
+000000014237F2BD (electron): (filename not available): IsSandboxedProcess
+00000001412610A0 (electron): (filename not available): GetHandleVerifier
+000000013FFCBC8D (electron): (filename not available): (function-name not available)
+0000000142B662A3 (electron): (filename not available): IsSandboxedProcess
+00000000773C59CD (kernel32): (filename not available): BaseThreadInitThunk
+000000007752383D (ntdll): (filename not available): RtlUserThreadStart
