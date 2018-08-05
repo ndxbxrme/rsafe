@@ -4,9 +4,9 @@ yma = require 'yma'
 {ipcRenderer} = require 'electron'
 console.log 'hey'
 
-glob.sync('./app/routes/**/*.js').forEach (file) ->
-  console.log 'loading', file
-  require path.resolve file
+require './app/routes/login.js'
+require './app/routes/prefs.js'
+require './app/routes/setkey.js'
   
 ipcRenderer.on 'goto', (sender, url) ->
   console.log 'got a goto', url
