@@ -146,7 +146,6 @@ doGetData = (plugin, callback) ->
     if not err
       encryptor.decrypt buffer, null, (err, text) ->
         mydata = JSON.parse text
-        console.log plugin, 'fetched'
         callback null,
           date: lastUpdated
           data: mydata
@@ -168,7 +167,6 @@ doSaveData = (plugin, dateVal, callback) ->
           rawImageData = jpeg.decode body
           plugins[plugin].set 'pic', buf, rawImageData.data, imgWidth, dateVal, bufCount, ((bufCount + 1) is buffers.length), ->
             bufCount++
-            console.log plugin, 'saved'
             bufCallback()
       , ->
         dataUpdated = false

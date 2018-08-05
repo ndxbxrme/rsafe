@@ -332,3 +332,25 @@ d:\dev\github\rsafe\node_modules\segfault-handler\src\segfault-handler.cpp (116)
 0000000077599E87 (ntdll): (filename not available): DbgUiRemoteBreakin
 00000000772959CD (kernel32): (filename not available): BaseThreadInitThunk
 00000000774F383D (ntdll): (filename not available): RtlUserThreadStart
+PID 13284 received SIGSEGV for address: 0xfd1ea06d
+SymInit: Symbol-SearchPath: '.;D:\DEV\github\rsafe;C:\Users\lewis\AppData\Roaming\npm\node_modules\electron\dist;C:\Windows;C:\Windows\system32;SRV*C:\websymbols*http://msdl.microsoft.com/download/symbols;', symOptions: 530, UserName: 'lewis'
+OS-Version: 6.1.7601 (Service Pack 1) 0x300-0x1
+d:\dev\github\rsafe\node_modules\segfault-handler\src\stackwalker.cpp (941): StackWalker::ShowCallstack
+d:\dev\github\rsafe\node_modules\segfault-handler\src\segfault-handler.cpp (116): segfault_handler
+00000000775148F8 (ntdll): (filename not available): RtlValidateHeap
+0000000077510092 (ntdll): (filename not available): RtlInitializeResource
+0000000077513C1F (ntdll): (filename not available): RtlRaiseException
+000007FEFD1EA06D (KERNELBASE): (filename not available): RaiseException
+000007FEFF5C5193 (RPCRT4): (filename not available): RpcRaiseException
+000007FEFF64E7EA (RPCRT4): (filename not available): RpcCancelThread
+000007FEFF62A1F0 (RPCRT4): (filename not available): I_RpcBindingIsServerLocal
+000007FEFF68F9E1 (RPCRT4): (filename not available): RpcAsyncCompleteCall
+000007FEFF68A2FA (RPCRT4): (filename not available): RpcEpRegisterNoReplaceW
+000007FEFF68F95A (RPCRT4): (filename not available): RpcAsyncCompleteCall
+000007FEFF68F8B8 (RPCRT4): (filename not available): RpcAsyncCompleteCall
+000007FEF98F14F6 (NLAapi): (filename not available): NlaDeleteDataSet
+00000000774DED52 (ntdll): (filename not available): TpReleaseWait
+00000000774E22FC (ntdll): (filename not available): TpDisassociateCallback
+00000000775CA023 (ntdll): (filename not available): DbgUiRemoteBreakin
+00000000773C59CD (kernel32): (filename not available): BaseThreadInitThunk
+000000007752383D (ntdll): (filename not available): RtlUserThreadStart
