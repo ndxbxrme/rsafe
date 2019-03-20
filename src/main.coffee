@@ -299,7 +299,7 @@ ready = ->
     frame: false
     autoHideMenuBar: true
     show: false
-  BrowserWindow.addDevToolsExtension 'd:/DEV/temp/26/yma-inspector/'
+  #BrowserWindow.addDevToolsExtension 'd:/DEV/temp/26/yma-inspector/'
   mainWindow.loadURL url.format
     pathname: path.join __dirname, 'index.html'
     protocol: 'file:'
@@ -357,6 +357,7 @@ ready = ->
         if err
           data = {}
         if data or lastUpdated is 0
+          #console.log JSON.stringify(data, null, '  ')
           notification = new Notification
             title: 'rSafe'
             body: 'Logged in as ' + username
