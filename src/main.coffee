@@ -205,12 +205,14 @@ saveData = (callback) ->
   , ->
     callback()
 loadSettings = ->
-  uri = path.join appDataDir, 'settings.json'
-  fs.exists uri, (exists) ->
-    if exists
-      settings = JSON.parse fs.readFileSync uri, 'utf-8'
-    else
-      console.log 'could not load settings'
+  new Promise (resolve) ->
+    uri = path.join appDataDir, 'settings.json'
+    fs.exists uri, (exists) ->
+      if exists
+        settings = JSON.parse fs.readFileSync uri, 'utf-8'
+      else
+        console.log 'could not load settings'
+      resolve()
 saveSettings = ->
   uri = path.join appDataDir, 'settings.json'
   fs.writeFile uri, JSON.stringify(settings), 'utf-8'
@@ -256,7 +258,7 @@ showPrefs = ->
 
  
 ready = ->
-  loadSettings()
+  await loadSettings()
   tray = new Tray path.join __dirname, 'icon.png'
   contextMenu = Menu.buildFromTemplate [
     id: 'login'
@@ -353,6 +355,7 @@ ready = ->
         buffer = Buffer.from settings[username], 'utf-8'
         encryptor.decrypt buffer, null, (err, decrypted) ->
           mysettings = JSON.parse decrypted
+      mysettings = {} if not mysettings
       getData (err) ->
         if err
           data = {}
